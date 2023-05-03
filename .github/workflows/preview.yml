@@ -1,0 +1,99 @@
+# -------------------------------------------------------------------------------------------------
+# This workflow is meant to be copied to the source repo, in order to to build the website
+# trigger the deployment.
+# Remember to edit the placeholder commands and env variables below to best suit your needs.
+# You should also create a PREVIEW_TOKEN secret following the action's README.
+# -------------------------------------------------------------------------------------------------
+
+name: Preview
+on:
+  # I'm disabling push events since in our case 'main' is the production branch,
+  # so it doesn't make sense to deploy previews for it.
+  # push:
+  #   branches:
+  #     - 'main'
+  delete:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+
+concurrency:
+  group: preview-${{ github.event_name }}-${{ github.event.number || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  dev:
+    name: Development
+    runs-on: ubuntu-20.04
+    env:
+      PREVIEW_REPO: Rei-Suzuki1729/rei-suzuki1729.github.io
+      PAGES_BASE: https://rei-suzuki1729.github.io/preview-template
+
+    steps:
+      - name: Checkout branch
+        if: ${{ !startsWith(github.event_name, 'pull_request') }}
+        uses: actions/checkout@v3
+
+      - name: Checkout PR head
+        if: ${{ startsWith(github.event_name, 'pull_request') && github.event.action != 'closed' }}
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        if: ${{ github.event.action != 'closed' }} # Skipping these steps if the PR has been closed
+        with:
+          node-version: '16'
+          cache: npm
+
+      - name: Install dependencies
+        if: ${{ github.event.action != 'closed' }}
+        run: npm ci --ignore-scripts
+
+      - name: Compile pages
+        if: ${{ github.event.action != 'closed' }}
+        run: npm run compile
+
+      - name: Setup Ruby
+        if: ${{ github.event.action != 'closed' }}
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      # This will calculate the base URL for the website, based on the event that triggered the workflow.
+      # Leave this step as it is, unless you know what you're doing.
+      - name: Determine base URL
+        if: ${{ github.event.action != 'closed' }}
+        id: baseurl
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request_target" ]; then
+            full="${{ env.PAGES_BASE }}/${{ github.repository }}/pr/${{ github.event.number }}"
+          else
+            full="${{ env.PAGES_BASE }}/${{ github.repository }}/branch/${{ github.ref_name }}"
+          fi
+
+          relative=/$(echo $full | cut -d/ -f4-)
+
+          echo "full=$full" >> $GITHUB_OUTPUT
+          echo "relative=$relative" >> $GITHUB_OUTPUT
+        shell: bash
+
+      # Run your usual build command, but make sure to use the correct base URL
+      # This example assumes you're using React, and that you're using the PUBLIC_URL env variable
+      - name: Build
+        if: ${{ github.event.action != 'closed' }}
+        run: bundle exec jekyll build --future
+        env:
+          JEKYLL_ENV: production
+
+      # This will trigger the action. Make sure to change the build_dir input to the correct directory
+      - uses: EndBug/pages-preview@v1
+        with:
+          build_dir: _site
+          preview_base_url: ${{ env.PAGES_BASE }}
+          preview_repo: ${{ env.PREVIEW_REPO }}
+          preview_token: ${{ secrets.PREVIEW_TOKEN }}
