@@ -42,20 +42,20 @@ jobs:
         with:
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        if: ${{ github.event.action != 'closed' }} # Skipping these steps if the PR has been closed
-        with:
-          node-version: '16'
-          cache: npm
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         if: ${{ github.event.action != 'closed' }} # Skipping these steps if the PR has been closed
+#         with:
+#           node-version: '16'
+#           cache: npm
 
-      - name: Install dependencies
-        if: ${{ github.event.action != 'closed' }}
-        run: npm ci --ignore-scripts
+#       - name: Install dependencies
+#         if: ${{ github.event.action != 'closed' }}
+#         run: npm ci --ignore-scripts
 
-      - name: Compile pages
-        if: ${{ github.event.action != 'closed' }}
-        run: npm run compile
+#       - name: Compile pages
+#         if: ${{ github.event.action != 'closed' }}
+#         run: npm run compile
 
       - name: Setup Ruby
         if: ${{ github.event.action != 'closed' }}
