@@ -15,6 +15,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-feed
+  - jekyll-github-metadata
 
 collections_dir: all_collections
 collections:

@@ -9,3 +9,4 @@ gem "jekyll-feed"
 gem "github-pages", group: :jekyll_plugins
 gem "webrick"
 gem 'jekyll-sass-converter'
+gem "jekyll-github-metadata"
