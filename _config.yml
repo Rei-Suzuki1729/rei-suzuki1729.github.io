@@ -1,5 +1,5 @@
 title: Rei Suzuki
-description: [ Portfolio]
+description: [Portfolio]
 markdown: kramdown
 
 # for atom feed
@@ -7,6 +7,7 @@ author:
   name: Rei Suzuki
   email: eva2021end@gmail.com
 
+github: [metadata]
 repository: Rei-Suzuki1729/rei-suzuki1729.github.io 
 remote-theme: pages-themes/hacker@0.2.0
 
