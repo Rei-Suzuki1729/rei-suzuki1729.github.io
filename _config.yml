@@ -7,6 +7,8 @@ author:
   name: Rei Suzuki
   email: eva2021end@gmail.com
 
+baseurl: ''
+url: 'https://rei-suzuki1729.github.io' 
 remote-theme: pages-themes/hacker@0.2.0
 
 plugins:
