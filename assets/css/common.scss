@@ -1,20 +1,24 @@
-:root {
+---
+---
+
+@import "jekyll-theme-hacker";
+ :root {
   --gray-1: #3f3f3f;
   --gray-2: #32353a;
   --gray-3: #25282c;
   --gray-4: #151618;
   --gray-5: #151618;
   --gray-6: #111111;
-  --white-1: #eeeeee;
-  --white-2: #a9abb3;
-}
+  // --white-1: #eeeeee;
+   --white-2: #a9abb3;
+} 
 #category-modal-bg {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6); 
   z-index: 10;
   display: none;
   visibility: hidden;
@@ -51,7 +55,7 @@
   display: block;
   visibility: visible;
 }
-.modal-article,
+.category,
 .modal-article-date {
   display: block;
   color: var(--white-2);

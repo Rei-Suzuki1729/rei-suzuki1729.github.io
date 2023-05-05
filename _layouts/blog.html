@@ -4,6 +4,16 @@
   <body>
     <main>
       {% include header.html %} {% include bio.html %}
+      <div class='skills'>
+        <h2>Skills</h2>
+        <div class="skill-content">
+          {% for skill in site.data.author.skills %}
+          <a href="{{skill.url}}" target="_blank" rel="noreferrer">
+          <img src="{{skill.img}}" alt="{{title}}" width="40" height="40"/>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
       <section class="articles">
         {% for post in site.posts %}
         <article class="article">
