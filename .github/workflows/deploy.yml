@@ -46,6 +46,7 @@ jobs:
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}" --future
         env:
           JEKYLL_ENV: production
+          PAGES_REPO_NWO: Rei-Suzuki1729/rei-suzuki1729.github.io
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v1
