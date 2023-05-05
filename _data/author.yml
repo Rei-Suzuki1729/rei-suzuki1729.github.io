@@ -3,6 +3,7 @@ dp: https://avatars.githubusercontent.com/u/83030439?s=400&u=AC&v=4
 description: "
   <p>
   名古屋工学院専門学校 情報総合学科 3年
+
   </p>
   <br/>
   <p>
@@ -181,5 +182,6 @@ skills:
   - title: openstack
     url: https://www.openstack.org/
     img: https://www.vectorlogo.zone/logos/openstack/openstack-icon.svg
+
 
 

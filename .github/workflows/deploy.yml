@@ -1,5 +1,7 @@
 
+
 name: Deploy Jekyll site to Pages
+
 
 on:
   # Runs on pushes targeting the default branch
@@ -10,6 +12,7 @@ on:
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+
 permissions:
   contents: read
   pages: write
